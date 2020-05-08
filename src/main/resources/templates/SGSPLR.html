@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上岗资格审批</title>
+
+
+    <link href="css/all.css" rel="stylesheet" type="text/css">
+    <link href="js/editor/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="js/editor/css/froala_editor.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body style="background-color: #e6ecf5">
+	<div class="div_tab01" style="background-color:#FFFFFF">
+    <p class="p_but">
+        <i class="down_i" ></i><a href="#" class="add_a">导出</a>
+        <i class="print_i" ></i><a href="#" class="add_a">打印</a>
+   </p>
+<p>
+    <table data-url="json/data_alae_list.json" id="table" class="table_style" style="margin: 0 auto" ></table>
+</p>
+</div>
+
+<div class="book_con01">
+
+    <h1 class="book_h01">上岗资格审批表</h1>
+    <form action="/sgsp1">
+    
+    <p class="book_p">
+        <table class="book_table" border="1" cellpadding="10">
+    <tr>
+        <td>
+        <label class="td_label">人员ID</label><i class="i_start"></i></td>
+        <td colspan="2"><input type="text" class="book_input03" name ="Person_id" minlength="2"/></td>
+        
+        <td ><label class="td_label">姓名</label><i class="i_start"></i></td>
+       <td colspan="2"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+    </tr>
+    
+    <tr>
+        <td>
+        <label class="td_label">身份证号</label><i class="i_start"></i></td>
+        <td colspan="2"><input type="text" class="book_input03" name ="identity" minlength="2"/></td>
+        
+        <td ><label class="td_label">联系电话</label><i class="i_start"></i></td>
+       <td colspan="2"><input type="text" class="book_input03" name ="phone" minlength="2"/></td>
+    </tr>
+     <tr>
+     	<td rowspan="3" colspan="2">
+       	<p><label class="td_label">接受BM知识培训、上岗BM教育情况</label></p>
+       </td>
+       <td colspan="2"><input type="radio" class="input_radio" checked="checked" name="radio02"/><a>未接受教育</a>
+       <input type="radio" class="input_radio" name="radio02"/><a>已接受教育</a></td>
+       <td>
+        <label class="td_label">时间</label></td>
+        <td>
+            <input type="date" class="book_input03"/>
+        </td>
+     </tr>
+     <tr>
+     <td colspan="4"><input type="radio" class="input_radio" checked="checked" name="radio03"/><a>未取得《SM人员上岗资格证》或国家BM培训基地结业证书或证书已过期</a>
+       <input type="radio" class="input_radio" name="radio03"/><a>取得《SM人员上岗资格证》或国家BM培训基地结业证书</a></td>
+     </tr>
+     <tr>
+     	<td colspan="2">
+        <label class="td_label">资格证书有效期</label></td>
+        <td>
+            <input type="date" class="book_input03"/></td><td><input type="date" class="book_input03"/>
+        </td>
+     </tr>
+     
+     <tr>
+     	<td colspan="2">
+        <label class="td_label">其它需要说明的情况</label></td>
+     	<td colspan="4">
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     <tr>
+     	<td>
+        <label class="td_label">部门BM领导意见</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">签字</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">时间</label></td>
+        <td>
+         <input type="date" class="book_input03"/></td>
+     </tr>
+     
+     <tr>
+     	<td>
+        <label class="td_label">BM办主任意见</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">签字</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">时间</label></td>
+        <td>
+         <input type="date" class="book_input03"/></td>
+     </tr>
+     
+     <tr>
+     	<td>
+        <label class="td_label">单位分管BM部委领导意见</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">签字</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">时间</label></td>
+        <td>
+         <input type="date" class="book_input03"/></td>
+     </tr>
+    
+    </table>
+    </p>
+    
+    <p class="book_foot"><input type="submit" value="下一步" style="background-color:green" /></p>
+    </form>
+</div>
+
+<script  src="js/jquery/jQuery-2.2.0.min.js"></script>
+<script src="js/editor/js/froala_editor.min.js"></script>
+
+<script src="js/editor/js/plugins/tables.min.js"></script>
+<script src="js/editor/js/plugins/lists.min.js"></script>
+<script src="js/editor/js/plugins/colors.min.js"></script>
+<script src="js/editor/js/plugins/media_manager.min.js"></script>
+<script src="js/editor/js/plugins/font_family.min.js"></script>
+<script src="js/editor/js/plugins/font_size.min.js"></script>
+<script src="js/editor/js/plugins/block_styles.min.js"></script>
+<script src="js/editor/js/plugins/video.min.js"></script>
+
+<script>
+    $(function(){
+        $('#editor').editable({inlineMode: false, alwaysBlank: true})
+    });
+</script>
+</body>
+</html>

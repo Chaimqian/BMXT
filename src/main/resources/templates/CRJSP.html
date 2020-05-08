@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>出入境审批</title>
+
+
+    <link href="css/all.css" rel="stylesheet" type="text/css">
+    <link href="js/editor/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="js/editor/css/froala_editor.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body style="background-color: #e6ecf5">
+	<div class="div_tab01" style="background-color:#FFFFFF">
+    <p class="p_but">
+        <i class="down_i" ></i><a href="#" class="add_a">导出</a>
+        <i class="print_i" ></i><a href="#" class="add_a">打印</a>
+   </p>
+<p>
+    <table data-url="json/data_alae_list.json" id="table" class="table_style" style="margin: 0 auto" ></table>
+</p>
+</div>
+
+<div class="book_con01">
+
+    <h1 class="book_h01">出入境审批表</h1>
+    
+    <p class="book_p">
+        <table class="book_table" border="1" cellpadding="10">
+    <tr>
+        <td>
+        <label class="td_label">人员ID</label><i class="i_start"></i></td>
+        <td><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        
+        <td ><label class="td_label">姓名</label><i class="i_start"></i></td>
+       <td><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+       
+       <td ><label class="td_label">部门</label><i class="i_start"></i></td>
+       <td><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+    </tr>
+       
+     <tr>
+     	<td>
+        <label class="td_label">出境时间</label><i class="i_start"></i></td>
+        <td>
+         <input type="date" class="book_input03"/></td>
+         <td>
+         <label class="td_label">申请时间</label><i class="i_start"></i></td>
+        <td>
+         <input type="date" class="book_input03"/></td>
+         <td ><label class="td_label">联系电话</label><i class="i_start"></i></td>
+       <td><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     
+     
+     <tr>
+       <td><label class="td_label">健康状况</label><i class="i_start"></i></td>
+        <td colspan="3">
+       <input type="radio" class="input_radio" checked="checked" name="radio03"/><a>健康</a>
+       <input type="radio" class="input_radio" name="radio03"/><a>良好</a>
+       <input type="radio" class="input_radio" name="radio03"/><a>有病</a>
+       </td>
+       <td ><label class="td_label">返国时间</label><i class="i_start"></i></td>
+       <td>
+         <input type="date" class="book_input03"/></td>
+     </tr>
+     
+     <tr>
+     	<td ><label class="td_label">顺访国家1</label></td>
+       <td colspan="2"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+       
+       <td ><label class="td_label">顺访国家2</label></td>
+       <td colspan="2"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+       </td>
+     </tr>
+     
+     <tr>
+       <td><label class="td_label">出境类型</label><i class="i_start"></i></td>
+        <td colspan="3">
+       <input type="radio" class="input_radio" checked="checked" name="radio04"/><a>因公</a>
+       <input type="radio" class="input_radio" name="radio04"/><a>因私</a>
+       </td>
+       <td ><label class="td_label">主访国家</label><i class="i_start"></i></td>
+       <td><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     
+     <tr>
+     	<td><label class="td_label">外语语种</label><i class="i_start"></i></td>
+       <td colspan="2"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+       
+       <td ><label class="td_label">第几次申请</label><i class="i_start"></i></td>
+       <td colspan="2"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     
+     <tr>
+     	<td rowspan="2">
+       	<p><label class="td_label">出访路线</label></p>
+       </td>
+        <td colspan="2">
+        <label class="td_label">中国出境城市</label></td>
+       <td colspan="3"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     <tr>
+     	<td colspan="2">
+        <label class="td_label">国外入境城市</label></td>
+        <td colspan="3"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     
+     <tr>
+     	<td rowspan="2">
+       	<p><label class="td_label">出访费用</label></p>
+       </td>
+        <td colspan="2">
+        <label class="td_label">国际旅费来源</label></td>
+       <td colspan="3"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     <tr>
+     	<td colspan="2">
+        <label class="td_label">国外旅费来源</label></td>
+        <td colspan="3"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     
+     <tr>
+       <td><label class="td_label">SM等级</label><i class="i_start"></i></td>
+       <td colspan="5">
+       <input type="radio" class="input_radio" checked="checked" name="radio05"/><a>核心SM人员</a>
+       <input type="radio" class="input_radio" name="radio05"/><a>重要SM人员</a>
+       <input type="radio" class="input_radio" name="radio05"/><a>一般SM人员</a>
+       </td>
+     </tr>
+     
+     <tr>
+     	<td ><label class="td_label">事由</label><i class="i_start"></i></td>
+       <td colspan="5"><input type="text" class="book_input03" name ="name" minlength="2"/></td>
+     </tr>
+     
+     <tr>
+     	<td>
+        <label class="td_label">部门BM领导意见</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">签字</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">时间</label></td>
+        <td>
+         <input type="date" class="book_input03"/></td>
+     </tr>
+     
+     <tr>
+     	<td>
+        <label class="td_label">BM办主任意见</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">签字</label></td>
+     	<td>
+        <input type="text" class="book_input03" name ="name" minlength="2"/></td>
+        <td>
+        <label class="td_label">时间</label></td>
+        <td>
+         <input type="date" class="book_input03"/></td>
+     </tr>
+    
+        
+    </table>
+    </p>
+    
+    <p class="book_foot"><input type="submit" value="提交" style="background-color:green" onclick="window.location.href='CRJSPJG.html'"/><input type="button" value="修改"  style="background-color:burlywood"/></p>
+</div>
+
+<script  src="js/jquery/jQuery-2.2.0.min.js"></script>
+<script src="js/editor/js/froala_editor.min.js"></script>
+
+<script src="js/editor/js/plugins/tables.min.js"></script>
+<script src="js/editor/js/plugins/lists.min.js"></script>
+<script src="js/editor/js/plugins/colors.min.js"></script>
+<script src="js/editor/js/plugins/media_manager.min.js"></script>
+<script src="js/editor/js/plugins/font_family.min.js"></script>
+<script src="js/editor/js/plugins/font_size.min.js"></script>
+<script src="js/editor/js/plugins/block_styles.min.js"></script>
+<script src="js/editor/js/plugins/video.min.js"></script>
+
+<script>
+    $(function(){
+        $('#editor').editable({inlineMode: false, alwaysBlank: true})
+    });
+</script>
+</body>
+</html>

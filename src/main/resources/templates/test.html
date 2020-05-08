@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <script>
+            function check() {
+            var check = $("input[type='checkbox']:checked");//在table中找input下类型为checkbox属性为选中状态的数据
+            var i = 0;
+            check.each(function(){
+                i++;
+            });
+            console.log(i);
+              check.each(function () {//遍历
+                  var row = $(this).parent("td").parent("tr");
+                var id = row.find("[name='id']").html(); //注意html()和val()
+                var name = row.find("[name='name']").html(); 
+                console.log(id+","+name)
+            })
+        }
+        </script>
+    </head>
+    <body>
+        <table id="tab">
+            <thead>
+                <tr>
+                    <td>id</td>
+                    <td>name</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input name="sub" type="checkbox" /></td>
+                    <td name="id">1</td>
+                    <td name="name">1</td>
+                </tr>
+                <tr>
+                    <td><input name="sub" type="checkbox" /></td>
+                    <td name="id">2</td>
+                    <td name="name">2</td>
+                </tr>
+                <tr>
+                    <td><input name="sub" type="checkbox" /></td>
+                    <td name="id">3</td>
+                    <td name="name">3</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="button" onclick="check()" value="提交" />
+    </body>
+</html>

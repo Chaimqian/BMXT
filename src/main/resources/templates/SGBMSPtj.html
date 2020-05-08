@@ -1,0 +1,255 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
+<title>上岗审批结果</title>
+
+<link href="css/all.css" rel="stylesheet" type="text/css">
+    <link href="js/bstable/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="js/bstable/css/bootstrap-table.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+	<div class="div_find">
+    <p>
+        <label class="find_labela">人员ID：</label><input type="text" class="find_input"><label class="find_labela">姓名：</label><input type="text" class="find_input"><input type="button" value="查询" class="find_but" id="but_open"><input type="button" value="重置" class="find_but" id="but_close02">
+    </p>
+</div>
+<form method="GET" action="sgbmsp.html">
+    <p class="p_but">
+        <i class="down_i" ></i><a href="#" class="add_a">导出</a>
+        <i class="print_i" ></i><a href="#" class="add_a">打印</a>
+        <i class="add_b" ></i><input class="add_a" id="check" type="submit" value="编辑"/>
+        <!--<i class="add_b" ></i><a href="#" class="add_a" onclick="window.location.href='sgbmsp.html'">编辑</a>-->
+   </p>
+<p>
+    <table id="table">
+    <tbody>
+    <tr th:each="entries,stat:${List}">
+        <td th:text="${stat.count}"><input type="checkbox" name="r"></td>
+        <td th:text="${entries['Person_id']}"><input type="text" name="Person_id" style="border-style:none;background-color:transparent"></td>
+        <td><input type="text" th:value="${per.RYNAME}" name="name" style="border-style:none;background-color:transparent" ></td>
+        <td></td>
+        <td>已通过</td>
+        <td th:text="${entries['BMSHRY']}"><input type="text" name="BMSHRY" style="border-style:none;background-color:transparent" ></td>
+        <td>未通过</td>
+        <td th:text="${entries['BMBSHRY']}"><input type="text" name="BMBSHRY" style="border-style:none;background-color:transparent" ></td>
+        <td>待审批</td>
+        <td th:text="${entries['BMXZSHRY']}"><input type="text" name="BMXZSHRY" style="border-style:none;background-color:transparent" ></td>
+        <!-- 写法一：
+        <td th:text="${entries['scourse']['cname']}"></td>
+        <td th:text="${entries['scourse']['cscore']}"></td>-->
+        <!-- 写法二：
+        <td th:text="*{entries['scourse']['cname']}"></td>
+        <td th:text="*{entries['scourse']['cscore']}"></td>-->
+<!--        &lt;!&ndash; 写法三：&ndash;&gt;-->
+<!--        <td th:object="${entries['scourse']}">-->
+<!--            <span th:text="*{['cname']}"></span>-->
+<!--        </td>-->
+<!--        <td th:object="${entries['scourse']}">-->
+<!--            <span th:text="*{['cscore']}"></span>-->
+<!--        </td>-->
+    </tr>
+    </tbody>
+<!--        <tr><td><input type="checkbox" name="r" value="1"></td><td><input type="text" name="Sid" style="border-style:none;background-color:transparent" value="a"></td>-->
+<!--            <td><input type="text" name="post" style="border-style:none;background-color:transparent" value="小明"></td><td><input type="text" name="class" style="border-style:none;background-color:transparent" value="秘书"></td>-->
+<!--            <td></td><td></td><td>已通过</td><td></td><td>已通过</td><td></td><td>未通过</td></tr>-->
+<!--            <tr><td><input type="checkbox"  name="r" value="2"></td><td><input type="text" name="Sid" style="border-style:none;background-color:transparent" value="b"></td>-->
+<!--                <td><input type="text" name="post" style="border-style:none;background-color:transparent" value="小红"></td><td><input type="text" name="class" style="border-style:none;background-color:transparent" value="秘书"></td>-->
+<!--                <td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>-->
+<!--                <tr><td><input type="checkbox" name="r" value="3"></td><td><input type="text" name="Sid" style="border-style:none;background-color:transparent" value="c"></td>-->
+<!--                    <td><input type="text" name="post" style="border-style:none;background-color:transparent" value="小霞"></td><td><input type="text" name="class" style="border-style:none;background-color:transparent" value="秘书"></td>-->
+<!--                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>-->
+    <!-- <table class="table_style" style="margin: 0 auto" id="table"> -->
+    </table>
+</p>
+</form>
+
+<script src="js/jquery/jQuery-2.2.0.min.js"></script>
+<script src="js/bstable/js/bootstrap.min.js"></script>
+<script src="js/bstable/js/bootstrap-table.js"></script>
+<script src="js/bstable/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="js/date/js/laydate.js"></script>
+<script>
+    !function(){
+        laydate.skin('danlan');//切换皮肤，请查看skins下面皮肤库
+        laydate({elem: '#demo'});
+        laydate({elem: '#demo1'});//绑定元素
+    }();
+</script>
+<script type="text/javascript">$('#table').bootstrapTable({})</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#table').bootstrapTable({
+            striped: true,
+            singleSelect: false,
+            pagination: true, //分页
+            pageSize: 10,
+            pageNumber: 1,
+            search: false, //显示搜索框
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: null,
+            columns: [
+                {
+                    field: 'check',
+                    align: 'center',
+                    valign: 'middle'
+                    
+                },
+                {
+                    title: "人员ID",
+                    field: 'id',
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    title: '姓名',
+                    field: 'name',
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    title: '上岗审批表',
+                    field: 'SGSPB',
+                    name: 'SGSPB',
+                    align: 'center',
+                    formatter: function (value, row) {
+                        var a = '<a  href="SGSPB.html" title="上岗审批表">详情</a> ';
+                        return a ;
+                    }
+                },
+                {
+                    title: '部门审核状态',
+                    field: 'BMS',
+                    name: 'BMS',
+                    align: 'center',
+                    formatter: function (c, row) {
+                        //var cellval=$("#station").val();
+                        if (c =='未通过'){
+                            return '<div  style="color:red">'+c+'</div>';
+                        } else  if (c =='已通过'){
+                            return '<div  style="color:green">'+c+'</div>';
+                        }else {
+                            return c;
+                        }}
+                },
+                {
+                    title: '部门审核人',
+                    field: 'BMP',
+                    name: 'BMP',
+                    align: 'center'
+                },
+                {
+                    title: 'BM办审核状态',
+                    field: 'BMBS',
+                    align: 'center',
+                    formatter: function (e, row) {
+                        //var cellval=$("#station").val();
+                        if (e =='未通过'){
+                            return '<div  style="color:red">'+e+'</div>';
+                        } else  if (e =='已通过'){
+                            return '<div  style="color:green">'+e+'</div>';
+                        }else {
+                            return e;
+                        }}
+                },
+                {
+                    title: 'BM办审核人',
+                    field: 'BMBP',
+                    align: 'center'
+                },
+                {
+                    title: 'BM工作小组审核状态',
+                    field: 'BMBGS',
+                    align: 'center',
+                    formatter: function (e, row) {
+                        //var cellval=$("#station").val();
+                        if (e =='未通过'){
+                            return '<div  style="color:red">'+e+'</div>';
+                        } else  if (e =='已通过'){
+                            return '<div  style="color:green">'+e+'</div>';
+                        }else {
+                            return e;
+                        }}
+                },
+                {
+                    title: 'BM工作小组审核人',
+                    field: 'BMBGP',
+                    align: 'center'
+                }
+            ]
+        });
+    })
+
+</script>
+<script src="js/layer_v2.1/layer/layer.js"></script>
+<script>
+    function openlayer(id){
+        layer.open({
+            type: 2,
+            title: '添加信息',
+            shadeClose: true,
+            shade: 0.5,
+            skin: 'layui-layer-rim',
+//            maxmin: true,
+            closeBtn:1,
+            area: ['98%', '92%'],
+            shadeClose: true,
+            closeBtn: 1,
+            content: 'lay01.html'
+            //iframe的url
+        });
+    }
+</script>
+    
+    <script type="text/javascript">
+           $("#check").click(function(){
+          //复选框的name='r'  
+        $("input[name='r']").each(function(){
+            if($(this).prop('checked')){
+                //是选中
+            }else{
+                //       td       tr   
+                $(this).parent().parent().find("input").removeAttr("name");
+               }
+        });
+    });
+    </script>
+<!-- <script type="text/javascript">
+        function Check() {
+            var Tabobj = $("#table");
+            var Check = $("table input[type=checkbox]:checked");//在table中找input下类型为checkbox属性为选中状态的数据
+            Check.each(function () {//遍历
+                var row = $(this).parent("td").parent("tr");//获取选中行
+                var id = row.find("[name='Sid']").html;//获取name='Sid'的值
+                // var id = row.find("input").find("[name='Sid']").html;//获取name='Sid'的值
+                alert(id);
+                document.form.action="sgbmsp?Sid="+id;
+                document.form.submit();
+            })
+           
+        }
+</script> -->
+<script>
+    $(function () {
+        $(".find_span").click(function () {
+            $("#open").show();
+            $(this).hide();
+            $(".find_span1").show();
+            $("#but_open").hide();
+
+        })
+        $(".find_span1").click(function () {
+            $("#open").hide();
+            $(this).hide();
+            $(".find_span").show();
+            $("#but_open").show();
+
+        })
+
+    })
+</script>
+
+</body>
+</html>
