@@ -3,27 +3,300 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
-<title>上岗审批结果</title>
+<title>上岗审批管理</title>
 
-<link href="css/all.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery/jQuery-2.2.0.min.js"></script>
+    <script src="easyUI/jquery.easyui.min.js"></script>
+    <script src="easyUI/easyui-lang-zh_CN.js"></script>
+    <script src="js/load.js"></script>
+    <link href="easyUI/themes/default/easyui.css" rel="stylesheet">
+    <link href="easyUI/themes/icon.css" rel="stylesheet">
+
+    <link href="css/all.css" rel="stylesheet" type="text/css">
     <link href="js/bstable/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="js/bstable/css/bootstrap-table.css" rel="stylesheet" type="text/css">
 
+
+
 </head>
 <body>
-<div class="div_tab01">  
-    <p class="p_but">
+<!--<div class="div_tab01">  -->
+<!--    <p class="p_but">-->
 
-        <i class="down_i" ></i><a href="#" class="add_a">导出</a>
-        <i class="print_i" ></i><a href="#" class="add_a">打印</a>
-   </p>
-   
-<p>
-	<!--添加数据-->
-    <table data-url="json/data_alae_list.json" id="table" class="table_style" style="margin: 0 auto" ></table>
-</p>
+<!--        <i class="down_i" ></i><a href="#" class="add_a">导出</a>-->
+<!--        <i class="print_i" ></i><a href="#" class="add_a">打印</a>-->
+<!--   </p>-->
+<!--   -->
+<!--<p>-->
+<!--	&lt;!&ndash;添加数据&ndash;&gt;-->
+<!--    <table data-url="json/data_alae_list.json" id="table" class="table_style" style="margin: 0 auto" ></table>-->
+<!--</p>-->
+<!--</div>-->
+<table  id="table" class="table_style" style="margin: 0 auto" ></table>
+<div id="toolbar">
+    <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addSGSP()">新增</a>
+    <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="reload()" >刷新</a>
 </div>
-<script src="js/jquery/jQuery-2.2.0.min.js"></script>
+
+<!--添加-->
+<div id="addDiv">
+    <form id="addForm">
+        <table id="person">
+            <tr>
+                <td><label class="td_label">ID:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly" name="Person_id" id="personId"  /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">姓名:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly"  name="personName" id="personName" /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">申请单类型:</label></td>
+                <td> <input  data-options="required:true"  class="easyui-combobox" name="YWID" id="sgspType" panelheight="auto"></td>
+            </tr>
+            <tr>
+                <td><label class="td_label">身份证:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly" name="idCard" id="idCard" /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">手机号码:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly"  name="tel" id="tel" /></td>
+            </tr>
+
+        </table>
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >因私出国(境)情况</div>
+        <!--因私出国(境)情况表格-->
+        <table id="yscgTable"></table>
+
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >接受境外资助情况</div>
+        <!--接受境外资助情况-->
+        <table id="jwzzTable"></table>
+
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >处分或者违法犯罪记录</div>
+        <!--处分或者违法犯罪记录-->
+        <table id="cfwfTable"></table>
+        <div style="height: 20px"></div>
+
+        <table id="sgjy">
+            <tr>
+                <td rowspan="3" colspan="2">
+                    <p><label class="td_label">接受BM知识培训、上岗BM教育情况</label></p>
+                </td>
+                <td colspan="2">
+                    <input type="radio" class="input_radio"  value="0" id="wjsjy"   name="PXOK"/><a>未接受教育</a>
+                    <input type="radio" class="input_radio"  value="1" id="yjsjy" name="PXOK"/><a>已接受教育</a>
+                </td>
+                <td width="50px"></td>
+                <td>
+                    <label class="td_label">时间</label>
+                    <input id="jsjysj" name="PXTIME" type="text" class="easyui-datebox" >
+                </td>
+
+
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <input type="radio" class="input_radio" value="0" id="whdzs" name="SGCERT"/><a>未取得《SM人员上岗资格证》或国家BM培训基地结业证书或证书已过期</a><br>
+                    <input type="radio" class="input_radio" value="1" id="yhdzs" name="SGCERT"/><a>取得《SM人员上岗资格证》或国家BM培训基地结业证书</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="td_label">资格证书有效期</label>
+                </td>
+                <td>
+
+                    <input id="startTime" name="SGZSXTIME" type="text" class="easyui-datebox" >
+                </td>
+                <td>
+                    <input id="endTime" name="SGZSXXTIME" type="text" class="easyui-datebox" >
+                </td>
+                <td height="20px"></td>
+            </tr>
+            <tr >
+                <td colspan="2">
+                    <label class="td_label">其它需要说明的情况</label>
+                </td>
+                <td colspan="4">
+                    <input id="otherDescribe" name="QISMOK" class="easyui-textbox text-rows " data-options="multiline:true"   style="height: 100px;width: 100%"  >
+                </td>
+            </tr>
+        </table>
+    </form>
+<!--    <div id="tb">-->
+<!--        <button style="margin-left:10px"   class="btn btn-info" onclick="submit()" >确定</button>-->
+<!--        <button style="margin-left:10px"   class="btn btn-info" onclick="cancel()"  >取消</button>-->
+<!--    </div>-->
+
+</div>
+<!--编辑-->
+<div id="editDiv">
+    <form id="editForm">
+        <table id="edit_person">
+            <tr>
+                <td><label class="td_label">ID:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly" name="edit_Person_id" id="edit_personId"  /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">姓名:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly"  name="edit_personName" id="edit_personName" /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">申请单类型:</label></td>
+                <td> <input  required="true"  class="easyui-combobox" name="edit_sgspType" id="edit_sgspType" panelheight="auto"></td>
+            </tr>
+            <tr>
+                <td><label class="td_label">身份证:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly" name="edit_idCard" id="edit_idCard" /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">手机号码:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly"  name="edit_tel" id="edit_tel" /></td>
+            </tr>
+        </table>
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >因私出国(境)情况</div>
+        <!--因私出国(境)情况表格-->
+        <table id="edit_yscgTable"></table>
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >接受境外资助情况</div>
+        <!--接受境外资助情况-->
+        <table id="edit_jwzzTable"></table>
+
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >处分或者违法犯罪记录</div>
+        <!--处分或者违法犯罪记录-->
+        <table id="edit_cfwfTable"></table>
+        <div style="height: 20px"></div>
+
+        <table id="edit_sgjy">
+            <tr>
+                <td rowspan="3" colspan="2">
+                    <p><label class="td_label">接受BM知识培训、上岗BM教育情况</label></p>
+                </td>
+                <td colspan="2">
+                    <input type="radio" class="input_radio"  value="0" id="edit_wjsjy"   name="edit_PXOK"/><a>未接受教育</a>
+                    <input type="radio" class="input_radio"  value="1" id="edit_yjsjy" name="edit_PXOK"/><a>已接受教育</a>
+                </td>
+                <td width="50px"></td>
+                <td>
+                    <label class="td_label">时间</label>
+                    <input id="edit_jsjysj" name="edit_jsjysj" type="text" class="easyui-datebox" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <input type="radio" class="input_radio" value="0" id="edit_whdzs" name="edit_SGCERT"/><a>未取得《SM人员上岗资格证》或国家BM培训基地结业证书或证书已过期</a><br>
+                    <input type="radio" class="input_radio" value="1" id="edit_yhdzs" name="edit_SGCERT"/><a>取得《SM人员上岗资格证》或国家BM培训基地结业证书</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="td_label">资格证书有效期</label>
+                </td>
+                <td>
+
+                    <input id="edit_startTime" name="edit_startTime" type="text" class="easyui-datebox" >
+                </td>
+                <td>
+                    <input id="edit_endTime" name="edit_endTime" type="text" class="easyui-datebox" >
+                </td>
+                <td height="20px"></td>
+            </tr>
+            <tr >
+                <td colspan="2">
+                    <label class="td_label">其它需要说明的情况</label>
+                </td>
+                <td colspan="4">
+                    <input id="edit_otherDescribe" name="edit_otherDescribe" class="easyui-textbox text-rows " data-options="multiline:true"   style="height: 100px;width: 100%"  >
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+<!-- 查看-->
+<div id="viewDiv">
+        <table id="view_person">
+            <tr>
+                <td><label class="td_label">ID:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly" name="view_personId" id="view_personId"  /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">姓名:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly"  name="view_personName" id="view_personName" /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">申请单类型:</label></td>
+                <td> <input  required="true" readonly="readonly"  class="easyui-combobox" name="view_sgspType" id="view_sgspType"  panelheight="auto"></td>
+            </tr>
+            <tr>
+                <td><label class="td_label">身份证:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly" name="view_idCard" id="view_idCard" /></td>
+                <td width="10px"></td>
+                <td><label class="td_label">手机号码:</label></td>
+                <td><input class="easyui-textbox" readonly="readonly"  name="view_tel" id="view_tel" /></td>
+            </tr>
+        </table>
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >因私出国(境)情况</div>
+        <!--因私出国(境)情况表格-->
+        <table id="view_yscgTable"></table>
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >接受境外资助情况</div>
+        <!--接受境外资助情况-->
+        <table id="view_jwzzTable"></table>
+
+        <div style="height: 20px"></div>
+        <div style="background-color: lightblue;font-size: 16px" >处分或者违法犯罪记录</div>
+        <!--处分或者违法犯罪记录-->
+        <table id="view_cfwfTable"></table>
+        <div style="height: 20px"></div>
+
+        <table id="view_sgjy">
+            <tr>
+                <td rowspan="3" colspan="2">
+                    <p><label class="td_label">接受BM知识培训、上岗BM教育情况</label></p>
+                </td>
+                <td colspan="2">
+                    <input type="radio" class="input_radio" readonly="readonly"  value="0" id="view_wjsjy"   name="view_PXOK"/><a>未接受教育</a>
+                    <input type="radio" class="input_radio" readonly="readonly" value="1" id="view_yjsjy" name="view_PXOK"/><a>已接受教育</a>
+                </td>
+                <td width="50px"></td>
+                <td>
+                    <label class="td_label">时间</label>
+                    <input id="view_jsjysj" name="view_jsjysj" readonly="readonly" type="text" class="easyui-datebox" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <input type="radio" class="input_radio" value="0" readonly="readonly" id="view_whdzs" name="view_SGCERT"/><a>未取得《SM人员上岗资格证》或国家BM培训基地结业证书或证书已过期</a><br>
+                    <input type="radio" class="input_radio" value="1" readonly="readonly" id="view_yhdzs" name="view_SGCERT"/><a>取得《SM人员上岗资格证》或国家BM培训基地结业证书</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="td_label">资格证书有效期</label>
+                </td>
+                <td>
+
+                    <input id="view_startTime" name="view_startTime" readonly="readonly" type="text" class="easyui-datebox" >
+                </td>
+                <td>
+                    <input id="view_endTime" name="view_endTime" readonly="readonly" type="text" class="easyui-datebox" >
+                </td>
+                <td height="20px"></td>
+            </tr>
+            <tr >
+                <td colspan="2">
+                    <label class="td_label">其它需要说明的情况</label>
+                </td>
+                <td colspan="4">
+                    <input id="view_otherDescribe" readonly="readonly" name="view_otherDescribe" class="easyui-textbox text-rows " data-options="multiline:true"   style="height: 100px;width: 100%"  >
+                </td>
+            </tr>
+        </table>
+    <div style="height: 20px"></div>
+    <!--    显示历史批注信息表格-->
+    <table id="commentList"></table>
+</div>
+
+<script src="js/jquery/jquery-confirm.js"></script>
 <script src="js/bstable/js/bootstrap.min.js"></script>
 <script src="js/bstable/js/bootstrap-table.js"></script>
 <script src="js/bstable/js/bootstrap-table-zh-CN.min.js"></script>
@@ -38,11 +311,23 @@
 
 <script type="text/javascript">
     $(function () {
+
+        //隐藏div
+        $("#addDiv").css("display","none");
+        $("#editDiv").css("display","none");
+        $("#viewDiv").css("display","none");
+        //初始化表格
+        initTable();
+    })
+
+    //初始化表格
+    function initTable() {
+        //绑定表格
         $('#table').bootstrapTable({
             method: "get",
             striped: true,
             singleSelect: false,
-            url: "json/SGSP.json",
+            url: '/SGSP/initTable',
             dataType: "json",
             pagination: true, //分页
             pageSize: 10,
@@ -50,6 +335,7 @@
             search: false, //显示搜索框
             contentType: "application/x-www-form-urlencoded",
             queryParams: null,
+            toolbar:'#toolbar', //显示toolbar
             columns: [
                 {
                     checkbox: "true",
@@ -59,89 +345,635 @@
                 }
                 ,
                 {
-                    title: "人员ID",
-                    field: 'id',
-                    align: 'center',
-                    valign: 'middle',
-                    name:'Sid'
-                },
-                {
                     title: '姓名',
                     field: 'name',
                     align: 'center',
                     valign: 'middle'
                 },
                 {
-                    title: '上岗审批表',
-                    field: 'SGSPB',
+                    title:'申请时间',
+                    field:'applyDate',
+                    align:'center'
+                },
+
+                {
+                    title:'状态',
                     align: 'center',
-                    formatter: function (value, row) {
-                        var a = '<a  href="SGSP.html" title="上岗审批表" onclick="handleEvent(\'' + row.id + '\')">详情</a> ';
-                        return a ;
+                    field:'status',
+                    formatter: function (d, row) {
+                        if(d==0){
+                            return '<div  style="color:red" >未申请</div>';
+                        }else if(d == 1){
+                            return '<div  style="color:red" >待办理</div>';
+                        }
+                        else if(d == 2){
+                            return '<div  style="color:greenyellow">审批中</div>';
+                        }else if(d == 3){
+                            return '<div  style="color:blue" >审批完成</div>';
+                        }else if(d == 4) {
+                            return '<div  style="color:gray" >已放弃</div>';
+                        }else{
+                            return '<div  style="color:red" >未知状态</div>';
+                        }
                     }
                 },
                 {
-                    title: '部门审核状态',
-                    field: 'BMS',
-                    align: 'center',
-                    formatter: function (c, row) {
-                        //var cellval=$("#station").val();
-                        if (c =='未通过'){
-                            return '<div  style="color:red">'+c+'</div>';
-                        } else  if (c =='已通过'){
-                            return '<div  style="color:green">'+c+'</div>';
+                    title:'操作',
+                    align:'center',
+                    field:'status',
+                    formatter: function (d, row,index) {
+                        //获得当前的申请表id
+                        // alert(row.sgnum)
+                        if(d==0){
+                            html = '<a onclick="submitApply('+row.sgnum+')" class="label label-warning" id="submitApply" name="submitApply">提交申请</a><a class="label label-primary " id="edit" onclick="edit('+row.sgnum+')">编辑</a><a class="label label-danger" id="del" onclick="del('+row.sgnum+')">删除</a>'
+                        }else if(d==1){
+                            html = '<a class="label label-success" id="viewProcess" onclick="viewProcess('+row.sgnum+')" >查看</a>'
+                        }else if(d == 2){
+                            html = '<a class="label label-success" id="viewProcess" onclick="viewProcess('+row.sgnum+')" >查看审批进度</a>'
+                        }else if(d == 3){
+                            html = '<a class="label label-success" id="viewProcess" onclick="viewProcess('+row.sgnum+')" >查看审批进度</a>'
                         }else {
-                            return c;
-                        }}
-                },
-                {
-                    title: '部门审核人',
-                    field: 'BMP',
-                    align: 'center'
-                },
-                {
-                    title: 'BM办审核状态',
-                    field: 'BMBS',
-                    align: 'center',
-                    formatter: function (e, row) {
-                        //var cellval=$("#station").val();
-                        if (e =='未通过'){
-                            return '<div  style="color:red">'+e+'</div>';
-                        } else  if (e =='已通过'){
-                            return '<div  style="color:green">'+e+'</div>';
-                        }else {
-                            return e;
-                        }}
-                },
-                {
-                    title: 'BM办审核人',
-                    field: 'BMBP',
-                    align: 'center'
-                },
-                {
-                    title: 'BM工作小组审核状态',
-                    field: 'BMGS',
-                    align: 'center',
-                    formatter: function (d, row) {
-                        //var cellval=$("#station").val();
-                        if (d =='未通过'){
-                            return '<div  style="color:red">'+d+'</div>';
-                        } else  if (d =='已通过'){
-                            return '<div  style="color:green">'+d+'</div>';
-                        }else {
-                            return d;
-                        }}
-                },
-                {
-                    title: 'BM工作小组审核人',
-                    field: 'BMGP',
-                    align: 'center'
+                            html = '<a class="label label-success" id="viewProcess" onclick="viewProcess('+row.sgnum+')">查看</a><a class="label label-danger" id="del" onclick="del('+row.sgnum+')">删除</a>'
+                        }
+                        return html;
+                    }
                 }
-            
+                //
             ]
         });
-    })
+    }
 
+    //提交申请
+    function submitApply(sgnum){
+        $.messager.confirm("提醒","确认提交?",function(r){
+            if (r){
+                //ajax请求 提交申请
+                var str = {"id":sgnum};
+                $.ajax({
+                    type:"POST",
+                    url: "/SGSP/startProcess",
+                    contentType: "application/json",
+                    data:JSON.stringify(str), //这样提交才行
+                    dataType:"json",
+                    beforeSend:beforeSend(),
+                    success:function(data){
+                        endSend()
+                        if (data.statu == "ok"){
+                            $.messager.alert("提示", "请到【待办任务】中办理任务", "info");
+                            $("#table").bootstrapTable('refresh');
+                        }else{
+                            $.messager.alert("提示",data.msg,"warning")
+                        }
+                    },error:function(){
+                        endSend()
+                        $.messager.alert("提示","未知错误","error")
+                    }
+                })
+            }
+        });
+    };
+    //点击新增按钮触发
+    function addSGSP() {
+        var vHeight = window.innerHeight;
+        var vWidth = window.innerWidth;
+        //弹出框
+        $("#addDiv").css("display", "block");
+        $("#addForm").form('clear'); // 添加之前重置表单数据
+
+        //设置开始结束时间的现实问题
+        startAndEndTime("#startTime","#endTime")
+        //初始化申请类型下拉框
+        initSgspType();
+        //初始化表格之前先销毁表格
+        $('#yscgTable').bootstrapTable('destroy');
+        $('#jwzzTable').bootstrapTable('destroy');
+        $('#cfwfTable').bootstrapTable('destroy');
+        //绑定因私出国(境)情况表格
+        initYscgTable("#yscgTable");
+        //绑定接受境外资助
+        initJwzzTable("#jwzzTable");
+        //绑定处分或违法乱纪
+        initCfwfTable("#cfwfTable");
+        //回显用户信息
+        $.ajax({
+            type:"POST",
+            url: "/SGSP/getPerson",
+            contentType: "application/json",
+            beforeSend: beforeSend(), //显示遮罩层
+            dataType:"json",
+            success:function(data){
+                $('#personId').textbox("setValue", data.person_id);
+                $('#personName').textbox("setValue", data.ryname);
+                $('#idCard').textbox("setValue", data.sfzh);
+                $('#tel').textbox("setValue", data.rydh);
+                endSend();
+            },error:function(){
+                endSend();
+                $.messager.alert("提示","未知错误","error")
+            }
+        });
+
+        $("#addDiv").dialog({
+            title:'添加申请单',
+            modal: true,
+            maxWidth: vWidth,
+            maxHeight: vHeight * 0.95,
+            buttons: [{
+                text: "确定",
+                iconCls: "icon-ok",
+                handler: function () {
+                    //异步把请求提交到后台
+                    AddSubmit();
+                }
+            }, {
+                text: "取消",
+                iconCls: "icon-cancel",
+                handler: function () {
+                    $("#addDiv").dialog("close");
+                }
+            }]
+        });
+    }
+    //添加
+    function AddSubmit(){
+        //未填写提醒
+        var sgspType = $('#sgspType').combobox('getValue');
+        var pxok = $("input[name='PXOK']:checked").val();
+        var sgcert = $("input[name='SGCERT']:checked").val();
+        var jsjysj = $("#jsjysj").datebox('getValue');
+        var startTime = $("#startTime").datebox('getValue');
+        var endTime = $("#endTime").datebox('getValue');
+
+        if (sgspType == ""){
+            // $.messager.alert("提醒","申请类别不为空","info");
+            showMessage("提示","申请单类型不为空");
+            return;
+        }
+        if(pxok == null ){
+            showMessage("提示","是否接受教育不能为空");
+            return;
+        }
+        if(pxok == 1){
+            if(jsjysj == ""){
+                showMessage("提示","接受教育时间不能为空");
+                return;
+            }
+        }
+        if(sgcert == null){
+            showMessage("提示","是否取得证书不能为空");
+            return;
+        }
+        if(sgcert ==1){
+            if(startTime == ""){
+                showMessage("提示","证书有效时间时间不能为空");
+                return;
+            } else if(endTime == ""){
+                showMessage("提示","证书有效时间时间不能为空");
+                return;
+            }
+        }
+
+        var formArray  = $("#addForm").serializeArray();
+        var formObject = {};
+        $.each(formArray,function (i,item) {
+            formObject[item.name] = item.value;
+        });
+        $.ajax({
+            type:"POST",
+            url: "/SGSP/addSubmit",
+            contentType: "application/json",
+            data:JSON.stringify(formObject), //这样提交才行
+            dataType:"json",
+            beforeSend:beforeSend(),
+            success:function(data){
+                endSend();
+                if (data.statu == "ok"){
+                    $("#addDiv").dialog("close");
+                    // $.messager.alert("提示",data.msg, "info");
+                    showMessage("提示",data.msg);
+                    $("#table").bootstrapTable('refresh');
+                }else{
+                    $("#addDiv").dialog("close");
+                    $.messager.alert("提示",data.msg,"warning")
+                }
+            },error:function(){
+                endSend();
+                $("#addDiv").dialog("close");
+                $.messager.alert("提醒","未知错误","error")
+            }
+        });
+
+    }
+
+    //删除
+    function del(sgnum){
+        $.messager.confirm("提醒","确认删除?",function(r) {
+            if (r) {
+                var str = {"sgnum": sgnum};
+                $.ajax({
+                    type: "POST",
+                    url: "/SGSP/delSgsp",
+                    contentType: "application/json",
+                    data: JSON.stringify(str), //这样提交才行
+                    beforeSend: beforeSend(), //显示遮罩层
+                    dataType: "json",
+                    success: function (data) {
+                        endSend();
+                        if (data.statu == "ok") {
+                            $.messager.alert("提示", data.msg, "info");
+                            $("#table").bootstrapTable('refresh');
+                        } else {
+                            endSend();
+                            $.messager.alert("提醒", data.msg, "warning")
+                        }
+
+                    }, error: function () {
+                        endSend();
+                        $.messager.alert("提示", "未知错误", "error")
+                    }
+                });
+            }
+        });
+    }
+
+    //编辑
+    function edit(sgnum) {
+        var vHeight = window.innerHeight;
+        var vWidth = window.innerWidth;
+        //弹出编辑框，这里没有和添加框使用同一个是因为radio这个控件的问题
+        $("#editDiv").css("display", "block");
+
+        //设置开始结束时间的现实问题
+        startAndEndTime("#edit_startTime","#edit_endTime")
+
+        $('#edit_yscgTable').bootstrapTable('destroy');
+        $('#edit_jwzzTable').bootstrapTable('destroy');
+        $('#edit_cfwfTable').bootstrapTable('destroy');
+        //绑定因私出国(境)情况表格
+        initYscgTable("#edit_yscgTable");
+        //绑定接受境外资助
+        initJwzzTable("#edit_jwzzTable");
+        //绑定处分或违法乱纪
+        initCfwfTable("#edit_cfwfTable");
+        var str = {"sgnum":sgnum};
+        //回显用户信息
+        $.ajax({
+            type:"POST",
+            url: "/SGSP/getPersonAndSgspBySgnum",
+            contentType: "application/json",
+            data:JSON.stringify(str), //这样提交才行
+            beforeSend: beforeSend(), //显示遮罩层
+            dataType:"json",
+            success:function(data){
+                $('#edit_personId').textbox("setValue", data.person.person_id);
+                $('#edit_personName').textbox("setValue", data.person.ryname);
+                $('#edit_idCard').textbox("setValue", data.person.sfzh);
+                $('#edit_tel').textbox("setValue", data.person.rydh);
+                if (data.sgsp.pxok == false){
+                    $("#edit_wjsjy").attr("checked",true);
+                }else{
+                    $("#edit_yjsjy").attr("checked",true);
+                }
+                $("#edit_jsjysj").datebox("setValue",data.sgsp.PXTIME);
+                if (data.sgsp.sgcert == false){
+                    $("#edit_whdzs").attr("checked",true);
+                }else {
+                    $("#edit_yhdzs").attr("checked",true);
+                }
+                $("#edit_startTime").datebox("setValue",data.sgsp.SGZSXTIME);
+                $("#edit_endTime").datebox("setValue",data.sgsp.SGZSXXTIME);
+                $("#edit_otherDescribe").textbox("setValue",data.sgsp.qismok);
+                //初始化申请类别下拉框并绑定选中值
+                initSgspTypeAndSelected(data.sgsp.ywid,"#edit_sgspType");
+                endSend();
+            },error:function(){
+                endSend();
+                $.messager.alert("提示","未知错误","error")
+            }
+        });
+
+        $("#editDiv").dialog({
+            title:'编辑申请单',
+            modal: true,
+            maxWidth: vWidth,
+            maxHeight: vHeight * 0.95,
+            buttons: [{
+                text: "确定",
+                iconCls: "icon-ok",
+                handler: function () {
+                    //异步把请求提交到后台
+                    editSubmit(sgnum);
+                }
+            }, {
+                text: "取消",
+                iconCls: "icon-cancel",
+                handler: function () {
+                    $("#editDiv").dialog("close");
+                }
+            }]
+        });
+    }
+    //更新
+    function editSubmit(sgnum) {
+
+        var pxok = $("input[name='edit_PXOK']:checked").val();
+        var sgcert = $("input[name='edit_SGCERT']:checked").val();
+        var jsjysj = $("#edit_jsjysj").datebox('getValue');
+        var startTime = $("#edit_startTime").datebox('getValue');
+        var endTime = $("#edit_endTime").datebox('getValue');
+
+        if(pxok == 1){
+            if(jsjysj == ""){
+                showMessage("提示","接受教育时间不能为空");
+                return;
+            }
+        }
+        if(sgcert == 1) {
+            if (startTime == "") {
+                showMessage("提示", "证书有效时间时间不能为空");
+                return;
+            } else if (endTime == "") {
+                showMessage("提示", "证书有效时间时间不能为空");
+                return;
+            }
+        }
+        var formArray  = $("#editForm").serializeArray();
+        var formObject = {};
+        $.each(formArray,function (i,item) {
+            formObject[item.name] = item.value;
+        });
+        $.ajax({
+            type:"POST",
+            url: "/SGSP/editSubmit/"+sgnum,
+            contentType: "application/json",
+            data:JSON.stringify(formObject), //这样提交才行
+            dataType:"json",
+            beforeSend:beforeSend(),
+            success:function(data){
+                endSend();
+                if (data.statu == "ok"){
+                    $("#editDiv").dialog("close");
+                    // $.messager.alert("提示",data.msg, "info");
+                    showMessage("提示",data.msg);
+                    $("#table").bootstrapTable('refresh');
+                }else{
+                    $("#editDiv").dialog("close");
+                    $.messager.alert("提示",data.msg,"warning")
+                }
+            },error:function(){
+                endSend();
+                $("#editDiv").dialog("close");
+                $.messager.alert("提醒","未知错误","error")
+            }
+        });
+
+    }
+    //查看&查看审批记录
+    function viewProcess(sgnum) {
+        var vHeight = window.innerHeight;
+        var vWidth = window.innerWidth;
+        //弹出编辑框，这里没有和添加框使用同一个是因为radio这个控件的问题
+        $("#viewDiv").css("display", "block");
+        $('#view_yscgTable').bootstrapTable('destroy');
+        $('#view_jwzzTable').bootstrapTable('destroy');
+        $('#view_cfwfTable').bootstrapTable('destroy');
+        //先销毁表格，下面再绑定表格
+        $('#commentList').bootstrapTable('destroy');
+        //绑定因私出国(境)情况表格
+        initYscgTable("#view_yscgTable");
+        //绑定接受境外资助
+        initJwzzTable("#view_jwzzTable");
+        //绑定处分或违法乱纪
+        initCfwfTable("#view_cfwfTable");
+        //初始化批注表
+        initComment(sgnum);
+        var str = {"sgnum":sgnum};
+        //回显用户信息
+        $.ajax({
+            type:"POST",
+            url: "/SGSP/getPersonAndSgspBySgnum",
+            contentType: "application/json",
+            data:JSON.stringify(str), //这样提交才行
+            beforeSend: beforeSend(), //显示遮罩层
+            dataType:"json",
+            success:function(data){
+                $('#view_personId').textbox("setValue", data.person.person_id);
+                $('#view_personName').textbox("setValue", data.person.ryname);
+                $('#view_idCard').textbox("setValue", data.person.sfzh);
+                $('#view_tel').textbox("setValue", data.person.rydh);
+                if (data.sgsp.pxok == false){
+                    $("#view_wjsjy").attr("checked",true);
+                }else{
+                    $("#view_yjsjy").attr("checked",true);
+                }
+                $("#view_jsjysj").datebox("setValue",data.sgsp.PXTIME);
+                if (data.sgsp.sgcert == false){
+                    $("#view_whdzs").attr("checked",true);
+                }else {
+                    $("#view_yhdzs").attr("checked",true);
+                }
+                $("#view_startTime").datebox("setValue",data.sgsp.SGZSXTIME);
+                $("#view_endTime").datebox("setValue",data.sgsp.SGZSXXTIME);
+                $("#view_otherDescribe").textbox("setValue",data.sgsp.qismok);
+                //初始化申请类别下拉框并绑定选中值
+                initSgspTypeAndSelected(data.sgsp.ywid,"#view_sgspType");
+                endSend();
+            },error:function(){
+                endSend();
+                $.messager.alert("提示","未知错误","error")
+            }
+        });
+
+        $("#viewDiv").dialog({
+            title:'查看',
+            modal: true,
+            maxWidth: vWidth,
+            maxHeight: vHeight * 0.95,
+            buttons: [{
+                text: "取消",
+                iconCls: "icon-cancel",
+                handler: function () {
+                    $("#viewDiv").dialog("close");
+                }
+            }]
+        });
+    }
+    //初始化申请类别下拉框并绑定选中值
+    function initSgspTypeAndSelected(Ywid,comboboxId) {
+        $.ajax({
+            Type:'GET',
+            url:'/SGSP/initSgapType',
+            contentType: "application/json",
+            dataType:'json',
+            success:function (data) {
+                $(comboboxId).combobox({
+                    data: data,
+                    valueField: 'id',
+                    textField: 'text',
+                    prompt: '请选择',
+                    editable: false ,//是否可编辑
+                    onLoadSuccess:function () {
+                        var val = $(this).combobox("getData");
+                        for (var i = 0;i<val.length;i++ ) {
+                            if (val[i].id == Ywid){
+                                $(this).combobox("select",val[i].id);
+                            }
+                        }
+                    }
+                });
+            },error:function () {
+
+            }
+        });
+    }
+    //初始化申请类型下拉框
+    function initSgspType() {
+        $.ajax({
+            Type:'GET',
+            url:'/SGSP/initSgapType',
+            contentType: "application/json",
+            dataType:'json',
+            success:function (data) {
+                $('#sgspType').combobox({
+                    data: data,
+                    valueField: 'id',
+                    textField: 'text',
+                    prompt: '请选择',
+                    editable: false  //是否可编辑
+                });
+            },error:function () {
+
+            }
+        });
+    }
+    //绑定因私出国表格
+    function initYscgTable(tableName){
+        $(tableName).bootstrapTable({
+            method: "get",
+            url: '/SGSP/initYscgTable',
+            dataType: "json",
+            columns: [
+                {
+                    title: '起始日期',
+                    field: 'QITIME',
+                    align: 'center',
+                },
+                {
+                    title: '结束日期',
+                    field: 'JSTIME',
+                    align: 'center',
+                },
+                {
+                    title: '所到国家或地区',
+                    field: 'sdgjdq',
+                    align: 'center',
+                },
+                {
+                    title: '事由',
+                    field: 'cjsy',
+                    align: 'center',
+                }
+            ],
+        });
+    }
+    //绑定接受境外资助表格
+    function initJwzzTable(tableName) {
+        $(tableName).bootstrapTable({
+            method: "get",
+            url: '/SGSP/initJwzzTable',
+            dataType: "json",
+            columns: [
+                {
+                    title: '时间',
+                    field: 'TIME',
+                    align: 'center',
+                },
+                {
+                    title: '国家地区',
+                    field: 'gjdq',
+                    align: 'center',
+                },
+                {
+                    title: '机构名称',
+                    field: 'jgname',
+                    align: 'center',
+                },
+                {
+                    title: '资助内容',
+                    field: 'zznr',
+                    align: 'center',
+                },
+                {
+                    title: '金额',
+                    field: 'money',
+                    align: 'center',
+                }
+            ],
+        });
+    }
+
+    //绑定处分或违法乱纪表格
+    function initCfwfTable(tableName) {
+        $(tableName).bootstrapTable({
+            method: "get",
+            url: '/SGSP/initCfwfTable',
+            dataType: "json",
+            columns: [
+                {
+                    title: '时间',
+                    field: 'TIME',
+                    align: 'center',
+                },
+                {
+                    title: '处理结果',
+                    field: 'cljg',
+                    align: 'center',
+                },
+                {
+                    title: '处理原因',
+                    field: 'clyy',
+                    align: 'center',
+                },
+                {
+                    title: '处理机构',
+                    field: 'cljgname',
+                    align: 'center',
+                }
+            ],
+        });
+    }
+
+    //绑定批注信息
+    function initComment(sgnum){
+        $("#commentList").bootstrapTable({
+            method: "get",
+            url: '/SGSP/initCommentBySgnum/'+sgnum,
+            dataType: "json",
+            columns: [
+                {
+                    title: '批注时间',
+                    field: 'time',
+                    align: 'center',
+                },
+                {
+                    title: '批注人',
+                    field: 'userId',
+                    align: 'center',
+                },
+                {
+                    title: '批注内容',
+                    field: 'fullMessage',
+                    align: 'center',
+                },
+            ],
+        });
+    }
+
+    
+    //刷新
+    function reload() {
+        $("#table").bootstrapTable('refresh');
+    }
 </script>
 <script src="js/layer_v2.1/layer/layer.js"></script>
 <script>

@@ -1,0 +1,497 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
+<title>上岗审批待办任务</title>
+
+    <script src="js/jquery/jQuery-2.2.0.min.js"></script>
+
+    <script src="js/bstable/js/bootstrap.min.js"></script>
+    <script src="js/bstable/js/bootstrap-table.js"></script>
+    <script src="js/bstable/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="js/date/js/laydate.js"></script>
+    <script src="js/load.js"></script>
+    <!--easyui-->
+    <script src="easyUI/jquery.easyui.min.js"></script>
+    <script src="easyUI/easyui-lang-zh_CN.js"></script>
+    <link href="easyUI/themes/default/easyui.css" rel="stylesheet">
+    <link href="easyUI/themes/icon.css" rel="stylesheet">
+
+    <link href="css/all.css" rel="stylesheet" type="text/css">
+    <link href="js/bstable/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="js/bstable/css/bootstrap-table.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+<div class="div_tab01">  
+    <p class="p_but">
+
+        <i class="down_i" ></i><a href="#" class="add_a">导出</a>
+        <i class="print_i" ></i><a href="#" class="add_a">打印</a>
+   </p>
+   
+<p>
+	<!--添加数据-->
+    <table  id="table" class="table_style" style="margin: 0 auto" ></table>
+</p>
+</div>
+
+<!--弹出任务处理框-->
+<div id="toDoTask">
+    <table id="person">
+        <tr>
+            <td><label class="td_label">ID:</label></td>
+            <td><input class="easyui-textbox" readonly="readonly" name="personId" id="personId"  /></td>
+            <td width="10px"></td>
+            <td><label class="td_label">姓名:</label></td>
+            <td><input class="easyui-textbox" readonly="readonly"  name="personName" id="personName" /></td>
+            <td width="10px"></td>
+            <td><label class="td_label">申请单类型:</label></td>
+            <td> <input  required="true" readonly="readonly"  class="easyui-combobox" name="sgspType" id="sgspType" panelheight="auto"></td>
+        </tr>
+        <tr>
+<!--            <td width="10px"></td>-->
+            <td><label class="td_label">身份证:</label></td>
+            <td><input class="easyui-textbox" readonly="readonly" name="idCard" id="idCard" /></td>
+            <td width="10px"></td>
+            <td><label class="td_label">手机号码:</label></td>
+            <td><input class="easyui-textbox" readonly="readonly"  name="tel" id="tel" /></td>
+        </tr>
+
+    </table>
+    <div style="height: 20px"></div>
+    <div style="background-color: lightblue;font-size: 16px" >因私出国(境)情况</div>
+    <!--因私出国(境)情况表格-->
+    <table id="yscgTable"></table>
+
+    <div style="height: 20px"></div>
+    <div style="background-color: lightblue;font-size: 16px" >接受境外资助情况</div>
+    <!--接受境外资助情况-->
+    <table id="jwzzTable"></table>
+
+    <div style="height: 20px"></div>
+    <div style="background-color: lightblue;font-size: 16px" >处分或者违法犯罪记录</div>
+    <!--处分或者违法犯罪记录-->
+    <table id="cfwfTable"></table>
+    <div style="height: 20px"></div>
+
+    <table id="sgjy">
+        <tr>
+            <td rowspan="3" colspan="2">
+                <p><label class="td_label">接受BM知识培训、上岗BM教育情况</label></p>
+            </td>
+            <td colspan="2">
+                <input type="radio" class="input_radio" readonly="readonly" value="0" id="wjsjy"  name="PXOK"/><a>未接受教育</a>
+                <input type="radio" class="input_radio" readonly="readonly" value="1" id="yjsjy" name="PXOK"/><a>已接受教育</a>
+            </td>
+            <td width="50px"></td>
+            <td>
+                <label class="td_label">时间</label>
+<!--                时间:-->
+                <input id="jsjysj" name="jsjysj" readonly="readonly" type="text" class="easyui-datebox" >
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4">
+                <input type="radio" class="input_radio" value="0" id="whdzs" name="SGCERT"/><a>未取得《SM人员上岗资格证》或国家BM培训基地结业证书或证书已过期</a><br>
+                <input type="radio" class="input_radio" value="1" id="yhdzs" name="SGCERT"/><a>取得《SM人员上岗资格证》或国家BM培训基地结业证书</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label class="td_label">资格证书有效期</label>
+<!--                资格证书有效时间:-->
+            </td>
+            <td>
+                <input id="startTime" name="startTime" readonly="readonly" type="text" class="easyui-datebox" >
+            </td>
+            <td>
+                <input id="endTime" name="endTime" readonly="readonly" type="text" class="easyui-datebox" >
+        </td>
+            <td height="20px"></td>
+        </tr>
+        <tr >
+        <td colspan="2">
+            <label class="td_label">其它需要说明的情况</label>
+        </td>
+        <td colspan="4">
+            <input id="otherDescribe" class="easyui-textbox text-rows " data-options="multiline:true"  readonly="readonly"  style="height: 100px;width: 100%"  >
+        </td>
+    </tr>
+       <tr style="height: 20px;"></tr>
+        <tr>
+            <td colspan="2">
+                <label class="td_label">批注</label>
+            </td>
+            <td colspan="4">
+                <input id="pizhu" class="easyui-textbox text-rows " data-options="multiline:true"   style="height: 100px;width: 100%"  >
+            </td>
+        </tr>
+    </table>
+    <div style="height: 20px"></div>
+<!--    显示历史批注信息表格-->
+    <table id="commentList"></table>
+<!--toolbar-->
+    <div id="tb">
+    </div>
+</div>
+
+<div id="show"></div>
+
+<script>
+    !function(){
+        laydate.skin('danlan');//切换皮肤，请查看skins下面皮肤库
+        laydate({elem: '#demo'});
+        laydate({elem: '#demo1'});//绑定元素
+    }();
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        //隐藏div
+        $('#toDoTask').css("display","none");
+        //绑定待办任务表格
+        initDbrwTable();
+    })
+    //绑定表格
+    function initDbrwTable() {
+        $('#table').bootstrapTable({
+            method: "get",
+            striped: true,
+            singleSelect: false,
+            url: '/SGSPDBRW/initTable',
+            dataType: "json",
+            pagination: true, //分页
+            pageSize: 10,
+            pageNumber: 1,
+            search: false, //显示搜索框
+            contentType: "application/x-www-form-urlencoded",
+            queryParams: null,
+            columns: [
+                {
+                    checkbox: "true",
+                    field: 'check',
+                    align: 'center',
+                    valign: 'middle'
+                }
+                ,
+                {
+                    title: '申请人姓名',
+                    field: 'applyName',
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    title:'待办任务名称',
+                    field:'name',
+                    align:'center'
+                },
+                {
+                    title:'创建时间',
+                    align:'center',
+                    field:'createTime',
+                },
+                {
+                    title:'办理人',
+                    align:'center',
+                    field:'assigneeName'
+                },
+                {
+                    title:'操作',
+                    align:'center',
+                    // field:'status',
+                    formatter: function (d, row,index) {
+
+                        html = '<a onclick="showTaskDetial(\''+row.id+'\','+row.applyId+')" class="label label-success" id="submitApply" name="submitApply">办理任务</a>'
+                        return html;
+                    }
+                }
+                //
+            ]
+        });
+    }
+    //回显任务详情
+    function showTaskDetial(taskId,applyId){
+        var vHeight = window.innerHeight;
+        var vWidth = window.innerWidth;
+        //弹出框
+        $("#toDoTask").css("display", "block");
+
+        //先销毁表格，下面再绑定表格
+        $('#yscgTable').bootstrapTable('destroy');
+        $('#jwzzTable').bootstrapTable('destroy');
+        $('#cfwfTable').bootstrapTable('destroy');
+        $('#commentList').bootstrapTable('destroy');
+        var str = {"taskId":taskId,"applyId":applyId};
+        $.ajax({
+            type:"POST",
+            url: "/SGSPDBRW/getInformationByTaskIdAndApplyId",
+            contentType: "application/json",
+            data:JSON.stringify(str), //这样提交才行
+            beforeSend: beforeSend(), //显示遮罩层
+            dataType:"json",
+            success:function(data){
+
+                $('#personId').textbox("setValue", data.person.person_id);
+                $('#personName').textbox("setValue", data.person.ryname);
+                $('#idCard').textbox("setValue", data.person.sfzh);
+                $('#tel').textbox("setValue", data.person.rydh);
+                if (data.sgsp.pxok == false){
+                    $("#wjsjy").attr("checked",true);
+                }else{
+                    $("#yjsjy").attr("checked",true);
+                }
+                $("#jsjysj").datebox("setValue",data.sgsp.PXTIME);
+                if (data.sgsp.sgcert == false){
+                    $("#whdzs").attr("checked",true);
+                }else {
+                    $("#yhdzs").attr("checked",true);
+                }
+                $("#startTime").datebox("setValue",data.sgsp.SGZSXTIME);
+                $("#endTime").datebox("setValue",data.sgsp.SGZSXXTIME);
+                $("#otherDescribe").textbox("setValue",data.sgsp.qismok)
+
+                //初始化申请类别下拉框并绑定选中值
+                initSgspTypeAndSelected(data.sgsp.ywid,"#sgspType");
+                //清空按钮div，否则第二次点击也会添加
+                $('#tb').empty();
+                htmls = '';
+                $.each(data.outcomes,function(i,val){
+                    html = '<button class="easyui-linkbutton" data-options="toggle:true" style="margin-left:10px;width: 6%" onclick="toDoTask(\''+taskId+'\',\''+val+'\')"    >'+val+'</button>'
+                    htmls = htmls+html;
+                })
+                htmls = htmls + '<button id="btn1" style="margin-left:10px;width: 6%" class="easyui-linkbutton" data-options="toggle:true" >挂起</button>'
+                $('#tb').append(htmls);
+                endSend();
+            },error:function(){
+                endSend();
+                $.messager.alert("提示","未知错误","error")
+            }
+        });
+        //初始化申请类别下拉框并绑定选中值
+        function initSgspTypeAndSelected(Ywid,comboboxId) {
+            $.ajax({
+                Type:'GET',
+                url:'/SGSP/initSgapType',
+                contentType: "application/json",
+                dataType:'json',
+                success:function (data) {
+                    $(comboboxId).combobox({
+                        data: data,
+                        valueField: 'id',
+                        textField: 'text',
+                        prompt: '请选择',
+                        editable: false ,//是否可编辑
+                        onLoadSuccess:function () {
+                            var val = $(this).combobox("getData");
+                            for (var i = 0;i<val.length;i++ ) {
+                                if (val[i].id == Ywid){
+                                    $(this).combobox("select",val[i].id);
+                                }
+                            }
+                        }
+                    });
+                },error:function () {
+
+                }
+            });
+        }
+        //绑定因私出国(境)情况表格
+        $("#yscgTable").bootstrapTable({
+            method: "get",
+            url: '/SGSPDBRW/initYscgTable/'+applyId,
+            dataType: "json",
+            columns: [
+                {
+                    title: '起始日期',
+                    field: 'QITIME',
+                    align: 'center',
+                },
+                {
+                    title: '结束日期',
+                    field: 'JSTIME',
+                    align: 'center',
+                },
+                {
+                    title: '所到国家或地区',
+                    field: 'sdgjdq',
+                    align: 'center',
+                },
+                {
+                    title: '事由',
+                    field: 'cjsy',
+                    align: 'center',
+                }
+            ],
+        });
+        //绑定接受境外资助
+        $("#jwzzTable").bootstrapTable({
+            method: "get",
+            url: '/SGSPDBRW/initJwzzTable/'+applyId,
+            dataType: "json",
+            columns: [
+                {
+                    title: '时间',
+                    field: 'TIME',
+                    align: 'center',
+                },
+                {
+                    title: '国家地区',
+                    field: 'gjdq',
+                    align: 'center',
+                },
+                {
+                    title: '机构名称',
+                    field: 'jgname',
+                    align: 'center',
+                },
+                {
+                    title: '资助内容',
+                    field: 'zznr',
+                    align: 'center',
+                },
+                {
+                    title: '金额',
+                    field: 'money',
+                    align: 'center',
+                }
+            ],
+        });
+        //绑定处分或违法乱纪
+        $("#cfwfTable").bootstrapTable({
+            method: "get",
+            url: '/SGSPDBRW/initCfwfTable/'+applyId,
+            dataType: "json",
+            columns: [
+                {
+                    title: '时间',
+                    field: 'TIME',
+                    align: 'center',
+                },
+                {
+                    title: '处理结果',
+                    field: 'cljg',
+                    align: 'center',
+                },
+                {
+                    title: '处理原因',
+                    field: 'clyy',
+                    align: 'center',
+                },
+                {
+                    title: '处理机构',
+                    field: 'cljgname',
+                    align: 'center',
+                }
+            ],
+        });
+        //绑定批注信息记录
+        $("#commentList").bootstrapTable({
+            method: "get",
+            url: '/SGSPDBRW/initCommentTable/'+taskId,
+            dataType: "json",
+            columns: [
+                {
+                    title: '批注时间',
+                    field: 'time',
+                    align: 'center',
+                },
+                {
+                    title: '批注人',
+                    field: 'userId',
+                    align: 'center',
+                },
+                {
+                    title: '批注内容',
+                    field: 'fullMessage',
+                    align: 'center',
+                },
+            ],
+        });
+        //弹出之前清空批注框中的内容
+        $("#pizhu").textbox("setValue",null);
+        //弹窗
+        $("#toDoTask").dialog({
+            title:'办理任务',
+            modal: true,
+            maxWidth: vWidth,
+            maxHeight: vHeight * 0.95,
+            buttons:'#tb',
+        });
+    };
+    //点击按钮进行办理
+    function toDoTask(taskId,val) {
+        var pizhu = $("#pizhu").val()
+        var str = {"taskId":taskId,"val":val,"pizhu":pizhu};
+        $.ajax({
+            type:"POST",
+            url: "/SGSPDBRW/toDoTask",
+            contentType: "application/json",
+            data:JSON.stringify(str), //这样提交才行
+            async: true,
+            dataType:"json",
+            beforeSend:beforeSend(),
+            success:function(data){
+                endSend()
+                if (data.statu == "ok"){
+                    //关闭弹窗
+                    $("#toDoTask").dialog("close");
+                    $("#table").bootstrapTable('refresh');
+                    // $.messager.alert("提示", "办理成功", "info");
+                    showMessage("提示","办理成功");
+                }else{
+                    endSend()
+                    $.messager.alert("提醒",data.msg,"warning")
+                }
+            },error:function(){
+                endSend()
+                $.messager.alert("提示","未知错误","error")
+            }
+        });
+    }
+</script>
+<script src="js/layer_v2.1/layer/layer.js"></script>
+<script>
+    function openlayer(id){
+        layer.open({
+            type: 2,
+            title: '添加信息',
+            shadeClose: true,
+            shade: 0.5,
+            skin: 'layui-layer-rim',
+//            maxmin: true,
+            closeBtn:1,
+            area: ['98%', '92%'],
+            shadeClose: true,
+            closeBtn: 1,
+            content: 'lay01.html'
+            //iframe的url
+        });
+    }
+</script>
+
+<script>
+    $(function () {
+        $(".find_span").click(function () {
+            $("#open").show();
+            $(this).hide();
+            $(".find_span1").show();
+            $("#but_open").hide();
+
+        })
+        $(".find_span1").click(function () {
+            $("#open").hide();
+            $(this).hide();
+            $(".find_span").show();
+            $("#but_open").show();
+
+        })
+
+    })
+</script>
+
+</body>
+</html>

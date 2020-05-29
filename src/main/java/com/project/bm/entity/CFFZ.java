@@ -1,5 +1,6 @@
 package com.project.bm.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ public class CFFZ {
     @Column
     private Integer Person_id;
     @Column
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date TIME;
     @Column
     private String CLJG;

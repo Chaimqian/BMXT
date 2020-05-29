@@ -1,4 +1,5 @@
 package com.project.bm.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,10 +17,10 @@ public class YSCG {
     @Column
     private int Person_id;
     @Column //省略默认列名就是属性名
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date QITIME=new Date();
     @Column
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date JSTIME=new Date();
     @Column
     private String SDGJDQ;

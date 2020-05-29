@@ -13,7 +13,10 @@
 <body>
 	<div class="div_find">
     <p>
-        <label class="find_labela">人员ID：</label><input type="text" class="find_input"><label class="find_labela">姓名：</label><input type="text" class="find_input"><input type="button" value="查询" class="find_but" id="but_open"><input type="button" value="重置" class="find_but" id="but_close02">
+        <label class="find_labela">人员ID：</label><input type="text" class="find_input">
+        <label class="find_labela">姓名：</label><input type="text" class="find_input">
+        <input type="button" value="查询" class="find_but" id="but_open">
+        <input type="button" value="重置" class="find_but" id="but_close02">
     </p>
 </div>
     <p class="p_but">
@@ -40,6 +43,7 @@
 
 <script type="text/javascript">
     $(function () {
+        //初始化表格
         $('#table').bootstrapTable({
             method: "get",
             striped: true,
@@ -54,12 +58,12 @@
             queryParams: null,
             columns: [
                 {
-                    checkbox: "true",
-                    field: 'check',
-                    align: 'center',
-                    valign: 'middle'
-                }
-                ,
+                    checkbox: true,
+                    title:"复选框",
+                    // field: 'check',
+                    // align: 'center',
+                    // valign: 'middle'
+                },
                 {
                     title: "人员ID",
                     field: 'id',

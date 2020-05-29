@@ -8,12 +8,41 @@ public class Person {
     @Id //这是一个主键
     private Integer Person_id;
 
+    private Integer PYLX;
+    @Column
+    private String ZHMM;
     @Column
     private String RYNAME;
     @Column //省略默认列名就是属性名
     private String SFZH;
     @Column //省略默认列名就是属性名
     private String RYDH;
+    @Column
+    private  Integer SSBMID;
+
+    public Integer getPYLX() {
+        return PYLX;
+    }
+
+    public void setPYLX(Integer PYLX) {
+        this.PYLX = PYLX;
+    }
+
+    public String getZHMM() {
+        return ZHMM;
+    }
+
+    public void setZHMM(String ZHMM) {
+        this.ZHMM = ZHMM;
+    }
+
+    public Integer getSSBMID() {
+        return SSBMID;
+    }
+
+    public void setSSBMID(Integer SSBMID) {
+        this.SSBMID = SSBMID;
+    }
 
     public Integer getPerson_id() {
         return Person_id;

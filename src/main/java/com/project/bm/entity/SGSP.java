@@ -1,4 +1,5 @@
 package com.project.bm.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -180,6 +181,45 @@ public class SGSP {
     public void setSGZSXXTIME(Date SGZSXXTIME) {
         this.SGZSXXTIME = SGZSXXTIME;
     }
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Date getApplyDate() {
+        return applyDate;
+    }
+
+    public void setApplyDate(Date applyDate) {
+        this.applyDate = applyDate;
+    }
+
+    public int getYWID() {
+        return YWID;
+    }
+
+    public void setYWID(int YWID) {
+        this.YWID = YWID;
+    }
+
+    public int getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(int isDel) {
+        this.isDel = isDel;
+    }
+
+    public String getBMBSHIDEA() {
+        return BMBSHIDEA;
+    }
+
+    public void setBMBSHIDEA(String BMBSHIDEA) {
+        this.BMBSHIDEA = BMBSHIDEA;
+    }
 
     @Id //这是一个主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增主键
@@ -187,25 +227,41 @@ public class SGSP {
     @Column
     private int Person_id;
     private boolean PXOK;
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date PXTIME;
     private boolean SGCERT;
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date SGZSXTIME;
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date SGZSXXTIME;
     private String QISMOK;
+
     private String BMSHIDEA;
     private String BMSHRY;
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date BMSHTIME;
     private String BMSHSTATE;
+
     private String BMBSHRY;
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date BMBSHTIME;
     private String BMBSHSTATE;
+
     private String BMXZSHIDEA;
     private String BMXZSHRY;
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
     private Date BMXZSHTIME;
     private String BMXZSHSTATE;
+
     private int SGZRSID;
+    private int status; //表示状态
+    private int YWID;
+//    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(timezone = "GMT+8",pattern="yyyy-MM-dd")
+    private Date applyDate; //申请时间
+    //是否删除
+    private int isDel;
+
+    private String BMBSHIDEA;
 
 }
