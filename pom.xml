@@ -73,17 +73,6 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
-        <!--引入activiti的依赖-->
-<!--        <dependency>-->
-<!--            <groupId>org.activiti</groupId>-->
-<!--            <artifactId>activiti-spring-boot-starter</artifactId>-->
-<!--            <version>7.0.0.Beta4</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.activiti</groupId>-->
-<!--            <artifactId>activiti-image-generator</artifactId>-->
-<!--            <version>7.0.0.Beta4</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-spring-boot-starter-basic</artifactId>

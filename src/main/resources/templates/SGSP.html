@@ -57,7 +57,7 @@
             <td>
                 <label class="td_label">操作</label></td>
      </tr>
-     <tr th:each="y:${List1}"><td th:text="${y.QITIME}">
+     <tr th:each="y:${yscgs}"><td th:text="${y.QITIME}">
             <input type="date" readonly="readonly" class="book_input03"/>
         </td>
         <td th:text="${y.JSTIME}">
@@ -85,7 +85,7 @@
             <td>
                 <label class="td_label">操作</label></td>
      </tr>
-     <tr  th:each="entries1,stat:${List2}"><td th:text="${entries1['TIME']}">
+     <tr  th:each="entries1,stat:${jwzzws}"><td th:text="${entries1['TIME']}">
             <input type="date" readonly="readonly" class="book_input03"/>
         </td>
          <td th:text="${entries1['GJDQ']}">
@@ -112,7 +112,7 @@
             <td>
                 <label class="td_label">操作</label></td>
      </tr>
-     <tr  th:each="entries2,stat:${List3}"><td th:text="${entries2['TIME']}">
+     <tr  th:each="entries2,stat:${cffzs}"><td th:text="${entries2['TIME']}">
             <input type="date" readonly="readonly" class="book_input03"/>
         </td>
          <td th:text="${entries2['CLJG']}">

@@ -35,6 +35,7 @@
 <table  id="table" class="table_style" style="margin: 0 auto" ></table>
 <div id="toolbar">
     <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="addSGSP()">新增</a>
+    <a href="javascript:void(0);" id="export" class="easyui-linkbutton" data-options="iconCls:'icon-print'" target="_blank" onclick="export_print()">导出</a>
     <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="reload()" >刷新</a>
 </div>
 
@@ -326,7 +327,8 @@
         $('#table').bootstrapTable({
             method: "get",
             striped: true,
-            singleSelect: false,
+            singleSelect: true,  //单选checkbox
+            // showRefresh     : true,              // 显示刷新按钮
             url: '/SGSP/initTable',
             dataType: "json",
             pagination: true, //分页
@@ -968,8 +970,27 @@
             ],
         });
     }
-
-    
+    //导出打印
+    function export_print() {
+        var selectContent = $('#table').bootstrapTable('getSelections')[0];
+        if (typeof(selectContent) == 'undefined' ){
+            showMessage("提示","请选择一列数据")
+            return false;
+        }else {
+            $('#export').attr('href','/SGSP/export_print/'+selectContent.sgnum);
+            // window.location.href='/SGSP/export_print/'+selectContent.sgnum;
+            // self.location = '/SGSP/export_print/'+selectContent.sgnum;
+            // $.ajax({
+            //     type:"GET",
+            //     url: "/SGSP/export_print/"+selectContent.sgnum,
+            //     contentType: "application/json",
+            //     dataType:"json",
+            //     // success: function () {
+            //     //     window.location.href='/SGSP/export_print/'+selectContent.sgnum;
+            //     // }
+            // });
+        }
+    }
     //刷新
     function reload() {
         $("#table").bootstrapTable('refresh');

@@ -324,4 +324,27 @@ public class SGGLController {
     public List<ActCommentVo> initComment(@PathVariable(name = "sgnum")Integer sgnum){
         return workFlowService.queryCommentBySgnum(sgnum);
     }
+
+    /**
+     * 导出打印
+     * @param session
+     * @param model
+     * @return
+     */
+    @GetMapping ("/SGSP/export_print/{sgnum}")
+    public String export_print(@PathVariable(name = "sgnum")Integer sgnum,HttpSession session,Model model){
+        //从session中获得person_id
+        Integer personId = Integer.parseInt(session.getAttribute("userId").toString());
+        Person person = personService.findById(personId);
+        model.addAttribute("per",person);
+        List<YSCG> yscgs = yscgService.findByPersonId(personId);
+        model.addAttribute("yscgs",yscgs);
+        List<JWZZ> jwzzes = jwzzService.findByPersion(personId);
+        model.addAttribute("jwzzws",jwzzes);
+        List<CFFZ> cffzs = cffzService.finByPersionId(personId);
+        model.addAttribute("cffzs",cffzs);
+        SGSP sgsp = sgspService.findById(sgnum);
+        model.addAttribute("sgsp",sgsp);
+        return "SGSP";
+    }
 }

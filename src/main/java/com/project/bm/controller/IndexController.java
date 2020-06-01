@@ -30,11 +30,11 @@ public class IndexController {
     public String index(HttpSession session)
     {
         //提交申请
-//        Integer personId = 12;
-//        String personName = "小张";
+        Integer personId = 12;
+        String personName = "小张";
         //部门审核人
-        Integer personId = 13;
-        String personName = "张三";
+//        Integer personId = 13;
+//        String personName = "张三";
         //保密办主任
 //        Integer personId = 16;
 //        String personName = "李四";
